@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {ToastController} from "ionic-angular";
 import {AlertController} from "ionic-angular";
+import {GroceriesServiceProvider} from "../../providers/groceries-service/groceries-service";
+import {InputDialogServiceProvider} from "../../providers/input-dialog-service/input-dialog-service";
 
 @Component({
   selector: 'page-home',
@@ -9,64 +11,25 @@ import {AlertController} from "ionic-angular";
 })
 export class HomePage {
   title = "Grocery";
-  items = [
-    {
-      name: "Milk",
-      quantity: 2
-    },
-    {
-      name: "Eggs",
-      quantity: 3
-    },
-    {
-      name: "Potatoes",
-      quantity: 5
-    },
-    {
-      name: "Bread",
-      quantity: 1
-    }
-  ]
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public inputDialogService: InputDialogServiceProvider, public dataService: GroceriesServiceProvider, public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  }
 
+  loadItems(){
+    return this.dataService.getItems()
   }
   removeItem(item, index){
-    this.items.splice(index, 1);
     const toast = this.toastCtrl.create({
       message: `Removing item: ${item.name}`,
       duration: 3000,
     });
     toast.present();
+  this.dataService.removeItem(index);
   }
 
+  editItem(item, index){
+    this.inputDialogService.showPrompt(item, index)
+  }
   addItem(){
-    console.log("button clicked")
-    const prompt = this.alertCtrl.create({
-      title: 'Add item',
-      message: 'Please enter an item...',
-      inputs: [
-        {
-          name: "item",
-          placeholder: "Name"
-        },
-        {
-          name: 'quantity',
-          placeholder: "Quantity"
-        }
-      ],
-      buttons: [
-        {
-          text: "Submit",
-          handler: value => {
-            let parsedValue = {
-              name: value.item,
-              quantity: parseInt(value.quantity)
-            };
-            this.items.push(parsedValue);
-          }
-        }
-      ]
-    })
-    prompt.present();
+    this.inputDialogService.showPrompt();
   }
 }
