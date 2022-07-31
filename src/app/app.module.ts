@@ -2,16 +2,16 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GroceriesServiceProvider } from '../providers/groceries-service/groceries-service';
 import { InputDialogServiceProvider } from '../providers/input-dialog-service/input-dialog-service';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import { InputDialogServiceProvider } from '../providers/input-dialog-service/in
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     GroceriesServiceProvider,
     InputDialogServiceProvider,
-    InputDialogServiceProvider
+    InputDialogServiceProvider,
+    SocialSharing,
   ]
 })
 export class AppModule {}
