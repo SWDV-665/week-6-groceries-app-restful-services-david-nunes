@@ -11,7 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GroceriesServiceProvider } from '../providers/groceries-service/groceries-service';
 import { InputDialogServiceProvider } from '../providers/input-dialog-service/input-dialog-service';
-
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { InputDialogServiceProvider } from '../providers/input-dialog-service/in
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

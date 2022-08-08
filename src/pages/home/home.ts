@@ -12,11 +12,24 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 })
 export class HomePage {
   title = "Grocery";
-  constructor(public inputDialogService: InputDialogServiceProvider, public dataService: GroceriesServiceProvider, public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController, public socialSharing: SocialSharing) {
+  items = [];
+  errorMessage: string;
+  constructor(public inputDialogService: InputDialogServiceProvider, public dataService: GroceriesServiceProvider,
+              public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController,
+              public socialSharing: SocialSharing) {
+    dataService.dataChanged$.subscribe((dataChangedL: boolean) => {
+      this.loadItems();
+    })
   }
 
+  ionViewDidLoad(){
+    this.loadItems();
+  }
   loadItems(){
     return this.dataService.getItems()
+      .subscribe(
+        items => this.items = items,
+        error => this.errorMessage = <any>error);
   }
   removeItem(item, index){
     const toast = this.toastCtrl.create({
